@@ -1,7 +1,3 @@
-// const delay_in_ms = document.querySelector('input[name="delay"]');
-// const delay_steps = document.querySelector('input[name="step"]');
-// const delay_amount = document.querySelector('input[name="amount"]');
-// const submitBtn = document.querySelector('button[type = "submit"]');
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const formEl = document.querySelector('.form');
@@ -9,14 +5,12 @@ let delayInp = null;
 let stepInp = null;
 let amountInp = null;
 
-console.log(formEl);
-
 function createPromise(position, delay) {
-  return new Promise((fulfill, reject) => {
+  return new Promise((resolve, reject) => {
     setTimeout(() => {
       const shouldResolve = Math.random() > 0.3;
       if (shouldResolve) {
-        fulfill({ position, delay });
+        resolve({ position, delay });
       } else {
         reject({ position, delay });
       }
@@ -26,6 +20,7 @@ function createPromise(position, delay) {
 
 const submitHandler = e => {
   e.preventDefault();
+  if (!e.target.tagName === 'BUTTON') return;
 
   const {
     elements: { delay, step, amount },
@@ -46,6 +41,7 @@ const submitHandler = e => {
 
     delayInp += stepInp;
   }
-  // e.currentTarget.reset();
+
+  e.currentTarget.reset();
 };
 formEl.addEventListener('submit', submitHandler);
